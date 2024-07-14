@@ -1,0 +1,13 @@
+:root {
+  --default: #201D2F;
+  --primary: #C881FF;
+}
+
+html {
+    font-family: var(--font-inter);
+    color: var(--default);
+}
+
+:focus {
+  outline: 2px solid #dcb4fa;
+}

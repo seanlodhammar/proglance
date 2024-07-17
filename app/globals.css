@@ -8,6 +8,6 @@ html {
     color: var(--default);
 }
 
-:focus {
-  outline: 2px solid #dcb4fa;
+input::-ms-reveal {
+  display: none;
 }

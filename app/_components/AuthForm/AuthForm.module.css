@@ -19,10 +19,15 @@
     font-size: 24px;
     font-weight: 600;
     margin-bottom: 0;
+    margin-bottom: 25px;
 }
 
 .input-group {
-    margin-top: 25px;
+    margin-bottom: 15px;
+}
+
+.input-error {
+    border: 1px solid #ed4242 !important;
 }
 
 .input-group label {
@@ -30,6 +35,20 @@
     font-size: 14px;
     letter-spacing: -0.14px;
     font-family: var(--font-inter);
+    margin-left: 2px;
+}
+
+.input-group .error-msg {
+    color: #ed4242;
+    font-size: 14px;
+    letter-spacing: -0.14px;
+    opacity: 1;
+    margin-left: 2px;
+}
+
+.input-group .hide-error {
+    opacity: 0;
+    margin-left: 2px;
 }
 
 .input-group input {
@@ -39,14 +58,52 @@
     box-shadow: 0px 4px 3.6px -5px rgba(0, 0, 0, 0.25);
     box-sizing: border-box;
     margin-top: 5px;
+    margin-bottom: 5px;
     padding-left: 10px;
     padding-right: 10px;
+    color: inherit;
     font-family: var(--font-inter);
     letter-spacing: -0.14px;
     font-size: 14px;
     height: 40px;
     width: 100%;
     transition: outline-width 0.08s ease;
+}
+
+.password-wrapper {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    position: relative;
+    max-height: 40px;
+    display: flex;
+    flex-direction: row;
+}
+
+.password-wrapper input {
+    margin-top: 0;
+    width: 100%;
+    padding-right: 40px !important;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+.password-reveal {
+    position: absolute;
+    right: 0;
+    height: 100%;
+    width: 43px;
+    padding: 0;
+    background: transparent;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border: none;
+}
+
+.eye-icon {
+    fill: #707070;
+    width: 16px;
+    height: 16px;
 }
 
 .input-group input:focus {
@@ -75,7 +132,13 @@
     border: 1px solid #E0E0E0;
     background: #FFF;
     box-shadow: 0px 4px 5.3px -5px rgba(0, 0, 0, 0.25);
+    transition: 0.15s;
 }
+
+.auth-link:hover {
+    background: #f7f7f7;
+}
+
 
 .btn-icon {
     margin-right: 8px;
@@ -94,5 +157,10 @@
     background: var(--default);
     border: none;
     border-radius: 5px;
+    transition: 0.15s;
+    cursor: pointer;
+}
 
+.submit-btn:hover {
+    background: #201d2ff6;
 }

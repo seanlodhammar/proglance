@@ -13,6 +13,9 @@ export const getCookie = (name: string) => {
 export const base = axios.create({
     baseURL: '/api',
     timeout: 3000,
+    validateStatus: function(status) {
+        return status < 400;
+    },
     withCredentials: true,
 })
 

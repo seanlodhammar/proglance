@@ -1,6 +1,6 @@
 {
-  "id": "5403720e-9751-470d-8435-560099f19f5d",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "5a9ffd34-384b-4ce1-a8d0-fea421681f7c",
+  "prevId": "93d5cf41-34d6-40f1-a0fb-dbc6632d238b",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -18,13 +18,25 @@
           "name": "type",
           "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "user_id": {
           "name": "user_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "expires_at": {
+          "name": "expires_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
         }
       },
       "indexes": {},
@@ -76,6 +88,12 @@
         },
         "refresh": {
           "name": "refresh",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "last_reset": {
+          "name": "last_reset",
           "type": "text",
           "primaryKey": false,
           "notNull": false

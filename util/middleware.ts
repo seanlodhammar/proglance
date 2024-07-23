@@ -3,6 +3,13 @@ import type { NextRequest } from 'next/server';
 import { getSession, invalidateSession} from './session';
 import { validateCustomAuthentication, validateOauthAuthentication } from './auth';
 import { getUserById } from '@/db/db';
+import { kv } from '@vercel/kv';
+import { Ratelimit } from '@upstash/ratelimit';
+
+const ratelimit = new Ratelimit({
+    redis: kv,
+    limiter: Ratelimit.slidingWindow(5, '10 s'),
+})
 
 export const deleteCookiesWithResponse = async(response: NextResponse) => {
     await invalidateSession();
@@ -68,7 +75,6 @@ export const authorizationHandler = async(request: NextRequest, wantAuthenticate
                     if(!wantAuthenticated) return NextResponse.next();
                     else return NextResponse.redirect(new URL('/auth/login', request.url));
                 }
-
             }
         }
         if(!wantAuthenticated) {
@@ -78,4 +84,10 @@ export const authorizationHandler = async(request: NextRequest, wantAuthenticate
             return await deleteCookiesWithResponse(NextResponse.redirect(new URL ('/auth/login', request.url)));
         } 
     }
+}
+
+export const rateLimiter = async(request: NextRequest) => {
+    const ip = request.ip ?? '127.0.0.1';
+    const { success } = await ratelimit.limit(ip);
+    return success;
 }

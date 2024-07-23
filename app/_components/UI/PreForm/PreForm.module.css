@@ -1,0 +1,23 @@
+.wrapper {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    width: 460px;
+    margin-bottom: 20px;
+}
+
+.icon {
+    width: 32px;
+    height: 32px;
+    fill: var(--default);
+}
+
+.heading {
+    font-family: var(--font-questrial);
+    margin-top: 20px;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 0;
+    margin-bottom: 25px;
+}

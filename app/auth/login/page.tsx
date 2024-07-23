@@ -1,5 +1,5 @@
 import styles from '../page.module.css';
-import AuthForm from '@/app/_components/AuthForm/AuthForm';
+import AuthForm from '@/app/_components/Auth/AuthForm/AuthForm';
 
 const Page = () => {
     return (

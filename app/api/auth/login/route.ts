@@ -18,9 +18,7 @@ export const POST = async(req: Request) => {
         const password = parse.password;
 
         const user = await getUserByEmail(email);
-
-        if(!user.password) throw new Error('User didn\'t signed up with different auth method');
-
+        if(!('password' in user) || typeof user.password !== 'string') throw new Error('User signed up with different auth method');
         const comparison = compareSync(password, user.password);
 
         if(!comparison) {
@@ -59,7 +57,13 @@ export const POST = async(req: Request) => {
                 errors: constructErrorObj(err),
             }, { status: 401 })
         }
-        console.log(err);
+        if(err instanceof Error) {
+            if(err.cause === 'nonexistent') {
+                return Response.json({
+                    msg: err.message,
+                }, { status: 400 });
+            }
+        }
         return Response.json({
             msg: 'Something went wrong',
         }, { status: 400 });

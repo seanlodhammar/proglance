@@ -1,7 +1,8 @@
-import type { NextRequest, NextResponse } from "next/server"
-import { getSession, createSession, invalidateSession } from "@/util/session";
+import type { NextRequest } from "next/server"
+import { getSession, invalidateSession } from "@/util/session";
 import { redirect } from 'next/navigation';
 import { cookies } from "next/headers";
+import { storeOAuthUser } from "@/util/auth";
 
 export const GET = async(request: NextRequest) => {
     const cookieStore = cookies();
@@ -13,12 +14,7 @@ export const GET = async(request: NextRequest) => {
         else if (query.get('state') !== session.state) throw new Error('State mismatch');
         const code = query.get('code');
         if(!code) throw new Error('No code');
-        const encodedRedirectUri = encodeURIComponent(process.env.GOOGLE_CLIENT_CALLBACK as string);
-        const url = `https://oauth2.googleapis.com/token?code=${code}&client_id=${process.env.GOOGLE_CLIENT_ID}&client_secret=${process.env.GOOGLE_CLIENT_SECRET}&redirect_uri=${encodedRedirectUri}&grant_type=authorization_code`
-        const res = await fetch(url, { method: 'POST', headers: { 'Accept': 'application/json' } });
-        const tokens = await res.json()
-        const createdSession = await createSession({ type: 'google', 'user-credential': { refresh_token: tokens.refresh_token, id_token: tokens.id_token } });
-        if(!createdSession) throw new Error('No session created');
+        await storeOAuthUser(code, 'google');
     } catch (err) {
         console.log('another error');
         if(err instanceof Error) {

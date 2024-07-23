@@ -1,10 +1,8 @@
 import type { NextRequest } from "next/server"
 import { getSession, invalidateSession } from "@/util/session";
-import { validateCustomAuthentication } from "@/util/auth";
-import * as jose from 'jose';
 import { cookies } from 'next/headers';
 
-export const POST = async(req: NextRequest) => {
+export const POST = async(_req: NextRequest) => {
     const cookieStore = cookies();
     try {
         const session = await getSession();
@@ -17,9 +15,8 @@ export const POST = async(req: NextRequest) => {
         } else if(session.type === 'google' || session.type === 'github') {
             await invalidateSession();
             cookieStore.delete('sid');
-            
         } else throw new Error('Invalid type');
     } catch (err) {
-
+        return Response.json({ msg: 'Something went wrong' }, { status: 400 });
     }
 }

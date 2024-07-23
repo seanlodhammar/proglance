@@ -1,7 +1,8 @@
 import type { NextRequest } from 'next/server';
-import { getSession,invalidateSession, createSession } from "@/util/session"
+import { getSession,invalidateSession } from "@/util/session"
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
+import { storeOAuthUser } from '@/util/auth';
 
 export const GET = async(request: NextRequest) => {
     const cookieStore = cookies();
@@ -13,10 +14,7 @@ export const GET = async(request: NextRequest) => {
         else if (query.get('state') !== session.state) throw new Error('State mismatch');
         const code = query.get('code');
         if(!code) throw new Error('No code');
-        const access = await fetch(`https://github.com/login/oauth/access_token?client_id=${process.env.GITHUB_CLIENT_ID}&client_secret=${process.env.GITHUB_CLIENT_SECRET}&code=${code}`, { headers: { 'Accept': 'application/json' } });
-        const credentials = await access.json();
-        const createdSession = await createSession({ 'user-credential': credentials, type: 'github' });
-        if(!createdSession) throw new Error('No session created');
+        await storeOAuthUser(code, 'github');
     } catch (err) {
         if(err instanceof Error) {
             console.log(err.message);

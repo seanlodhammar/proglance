@@ -19,11 +19,7 @@ export const POST = async(req: NextRequest) => {
         const password = parse.password;
     
         const hash = bcrypt.hashSync(password, 12);
-        const user = await createUser(email, hash, 'custom');
-
-        if(!user) {
-            return Response.json({ errors: { email: 'Email already in use' }}, { status: 401 });
-        }
+        const user = await createUser(email, hash);
     
         const genSecret = randomBytes(16).toString('hex');
         const secret = new TextEncoder().encode(genSecret);
@@ -46,15 +42,24 @@ export const POST = async(req: NextRequest) => {
     
         return Response.json({
             msg: 'Successful'
-        }, { status: 200 });
+        }, { status: 201 });
     } catch (err) {
+        if(err instanceof Error) {
+            if(err.message.includes('violates unique constraint')) {
+                return Response.json({
+                    errors: { email: 'Email already exists' },
+                }, { status: 400 });
+            }
+        }
         if(err instanceof ZodError) {
             return Response.json({
                 msg: 'Invalid user credentials',
                 errors: constructErrorObj(err),
-            }, { status: 401 })
+            }, { status: 401 });
         }
-
+        return Response.json({
+            msg: 'Something went wrong',
+        }, { status: 400 });
     }
 
 

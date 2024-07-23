@@ -1,0 +1,100 @@
+.reset-password {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    width: 460px;
+    margin-bottom: 20px;
+}
+
+.icon {
+    width: 32px;
+    height: 32px;
+    fill: var(--default);
+}
+
+.heading {
+    font-family: var(--font-questrial);
+    margin-top: 20px;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 0;
+    margin-bottom: 25px;
+}
+
+.label {
+    color: #707070;
+    font-size: 14px;
+    letter-spacing: -0.14px;
+    font-family: var(--font-inter);
+    margin-left: 2px;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.retry-btn {
+    font-family: var(--font-inter);
+    color: #C881FF;;
+    background: transparent;
+    border: none; 
+    margin-top: 5px;
+    padding: 0;
+    font-size: 13px;
+    margin-left: 2px;
+    text-align: left;
+    letter-spacing: -0.14px; 
+    cursor: pointer;
+}
+
+.retry-btn:enabled:hover {
+    opacity: 0.8;
+}
+
+.retry-btn:disabled {
+    color: #707070;
+    cursor: default;
+}
+
+.msg {
+    font-size: 14px;
+    letter-spacing: -0.14px;
+    margin-left: 2px;
+    display: block;
+    margin-top: 5px;
+}
+
+.msg.hide {
+    opacity: 0;
+}
+
+.msg.reveal {
+    opacity: 1;
+}
+
+.msg.error {
+    color: #ed4242;
+}
+
+.msg.success {
+    color: #64ed42;
+}
+
+.submit-btn {
+    margin-top: 25px;
+    width: 100%;
+    box-sizing: border-box;
+    height: 40px;
+    font-size: 14px;
+    letter-spacing: -0.14px;
+    color: white;
+    font-family: var(--font-inter);
+    background: var(--default);
+    border: none;
+    border-radius: 5px;
+    transition: 0.15s;
+    cursor: pointer;
+}
+
+.submit-btn:hover {
+    background: #201d2ff6;
+}

@@ -149,7 +149,7 @@
 }
 
 .submit-btn {
-    margin-top: 25px;
+    margin-top: 20px;
     width: 100%;
     box-sizing: border-box;
     height: 40px;
@@ -162,8 +162,42 @@
     border-radius: 5px;
     transition: 0.15s;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .submit-btn:hover {
     background: #201d2ff6;
+}
+
+.spinner {
+    margin-left: 10px;
+    width: 13px;
+    height: auto;
+    transition: margin-left 0.15s ease;
+    animation: spinning 1s infinite linear;
+}
+
+.other-opt {
+    margin-bottom: 25px;
+    display: block;
+}
+
+.other-opt-link {
+    color: #C881FF;
+    text-decoration: none;
+}
+
+.other-opt-link:hover {
+    text-decoration: underline;
+}
+
+@keyframes spinning {
+    from {
+        rotate: 0deg;
+    } 
+    to {
+        rotate: 360deg;
+    }
 }

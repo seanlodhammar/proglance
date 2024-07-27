@@ -2,25 +2,26 @@
 import { type ChangeEvent, type FC, type FormEvent, useState } from 'react';
 import styles from './AuthForm.module.css';
 import Link from 'next/link';
-import { RectStack, Google, Github, Eye, EyeSlash } from '@/app/_components/UI/icons';
-import Input from '@/app/_components/UI/Input';
+import { Google, Github, Eye, EyeSlash, Spinner } from '@/app/_components/UI/icons';
 import { base } from '@/util/fetch';
 import { constructErrorObj, user } from '@/util/validation';
 import { ZodError } from 'zod';
 import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 import PreForm from '../../UI/PreForm';
+import { Input, Label } from '@/app/_components/UI'; 
 
 const AuthForm : FC<{ type: 'signup' | 'login' }> = ({ type }) => {
-
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [revealed, setRevealed] = useState(false);
     const [errors, setErrors] = useState<{ [error: string]: string } | null>(null);
+    const [loading, setLoading] = useState<boolean>(false);
     const router = useRouter();
     
     const handleFormSubmission = async(e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setLoading(true);;
         try {
             const parse = user.parse({ email, password });
             try {
@@ -45,8 +46,9 @@ const AuthForm : FC<{ type: 'signup' | 'login' }> = ({ type }) => {
                 const error = constructErrorObj(err);
                 setErrors(error);
             }
+        } finally {
+            setLoading(false);
         }
-
     }
 
     const emailHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -77,8 +79,17 @@ const AuthForm : FC<{ type: 'signup' | 'login' }> = ({ type }) => {
         setRevealed((prevState) => !prevState);
     }
     
-    return (
-        <PreForm title={type === 'login' ? 'Login' : 'Signup'} >
+    return ( 
+        <PreForm type='auth' title={type === 'login' ? 'Login' : 'Signup'} >
+            <Label className={styles['other-opt']}>
+                { type === 'signup' ? 'Already have an account?' : ''} 
+                { type === 'login' ? 'Don\'t have an account?' : ''}
+                &nbsp;
+                <Link className={styles['other-opt-link']} href={type === 'signup' ? '/auth/login' : '/auth/signup'}>
+                    { type === 'signup' ? 'Login here' : '' } 
+                    { type === 'login' ? 'Signup here' : '' }
+                </Link> 
+            </Label>
             <form onSubmit={handleFormSubmission}>
                 <input autoComplete="false" role='presentation' name="hidden" type="text" style={{ display: 'none' }} />
                 <div className={styles['input-group']}>
@@ -97,12 +108,14 @@ const AuthForm : FC<{ type: 'signup' | 'login' }> = ({ type }) => {
                     </div>
                     <label htmlFor='password' className={`${styles['error-msg']} ${!errors || !errors.password ? styles['hide-error'] : ''}`}>{errors && errors.password ? errors.password : 'Placeholder'}</label>
                 </div>
+                <button type='submit' className={styles['submit-btn']}>
+                    Submit
+                    { loading ? <Spinner className={`${styles['spinner']}`} fill='#fff' /> : null }
+                </button>
                 <div className={styles['alt-auth']}>
                     <Link href='/api/auth/google' className={styles['auth-link']}><Google className={styles['btn-icon']}/>Google</Link>
                     <Link href='/api/auth/github' className={styles['auth-link']}><Github className={styles['btn-icon']}/>Github</Link>
                 </div>
-                <button type='submit' className={styles['submit-btn']}>Submit</button>
-
             </form>
         </PreForm>
     )

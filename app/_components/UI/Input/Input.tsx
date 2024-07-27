@@ -10,8 +10,8 @@ interface InputProps extends HTMLProps<HTMLInputElement> {
 }
 
 const Input : FC<InputProps> = ({ className, wrapperClass, error, inputType, ...props }) => { 
+    const [revealed, setRevealed] = useState<boolean>(false);
     if(inputType === 'reveal') {
-        const [revealed, setRevealed] = useState<boolean>(false);
         const handleReveal = () => setRevealed((prevState) => !prevState);
         return (
             <div className={`${styles['input-wrapper']} ${wrapperClass ? wrapperClass : ''}`}>

@@ -53,9 +53,8 @@ const ResetPassword = () => {
                 setIntervalId(null);
             }
         }
-    }, [retry])
+    }, [retry, intervalId]);
 
-    // todo: finish later, add server-side try counter
     const handleFormSubmission = async(e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {

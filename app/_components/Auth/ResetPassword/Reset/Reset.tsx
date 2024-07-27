@@ -1,8 +1,8 @@
 'use client';
 import styles from './Reset.module.css';
 import { PreForm, Input, Label } from "@/app/_components/UI";
-import { type ChangeEvent, type FormEvent, useState, useEffect } from 'react';
-import { base, fetcher } from "@/util/fetch";
+import { type ChangeEvent, type FormEvent, useState  } from 'react';
+import { base } from "@/util/fetch";
 import { ZodError } from 'zod';
 import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';

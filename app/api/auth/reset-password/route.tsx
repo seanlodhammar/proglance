@@ -28,8 +28,6 @@ const existingSession = async() => {
             })
             const newRetryIn = now + 1 * 60 * 1000;
             const newTries = tries - 1;
-            console.log(newTries);
-            console.log('sent');
             await setCustomKey('confirmation-sid', { retryIn: newRetryIn, tries: newTries });
             return Response.json({ msg: 'Email sent', email: email, retryIn: newRetryIn - now, tries: newTries }, { status: 201 }) 
         }

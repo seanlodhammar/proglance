@@ -30,7 +30,7 @@ const AuthForm : FC<{ type: 'signup' | 'login' }> = ({ type }) => {
                     console.log(res.data.msg);
                     return;
                 }
-                router.replace('/');
+                router.replace('/dashboard');
             } catch (err) {
                 if(err instanceof AxiosError) {
                     if(err.response && err.response.data.msg) {
